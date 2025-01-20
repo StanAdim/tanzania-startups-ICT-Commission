@@ -21,13 +21,13 @@ const globalData = useGlobalDataStore()
       <LandingTheCategories />
     </section>
     <!--    section 3-->
-    <section class="section">
-        <LandingTheStats />
-    </section>
-    <!--    section 4-->
-    <section class="section">
-       <LandingTheSolutions />
-    </section>
+<!--    <section class="section">-->
+<!--        <LandingTheStats />-->
+<!--    </section>-->
+<!--    &lt;!&ndash;    section 4&ndash;&gt;-->
+<!--    <section class="section">-->
+<!--       <LandingTheSolutions />-->
+<!--    </section>-->
     <!--    section 5-->
     <section class="section">
         <LandingTheStakeholdersCall />

@@ -30,7 +30,7 @@ class GeneralController extends Controller
         ],200);
    }
    public function sectors () : JsonResponse{
-            $items = ICTSector::all()->map(function ($sector) {
+            $items = ICTSector::orderBy('name', 'asc')->get()->map(function ($sector) {
                 return [
                     'value' => $sector->id,
                     'label' => $sector->name,
@@ -53,7 +53,7 @@ class GeneralController extends Controller
         ],200);
    }
    public function fundingStages (): JsonResponse{
-            $items = FundingStage::all()->map(function ($sector) {
+            $items = FundingStage::orderBy('name', 'asc')->get()->map(function ($sector) {
                 return [
                     'value' => $sector->id,
                     'label' => $sector->name,

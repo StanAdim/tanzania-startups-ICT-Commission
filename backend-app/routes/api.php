@@ -83,15 +83,12 @@ Route::group(['prefix' => '', 'middleware' => ['auth:sanctum'] ], function () {
         Route::delete('/document-delete-{id}', [DocumentController::class, 'destroy']);
         Route::put('/document-update-{id}', [DocumentController::class, 'updateStatus']);
         Route::get('/preview-document', [DocumentController::class, 'previewDocument']);
-
-
 });
 
 // Admin routes
 Route::group(['prefix' => 'admin','middleware' => ['role:admin']], function () {
     // Routes only accessible to users with the 'admin' role
     Route::get('/user-list', [AdminUserController::class, 'userList']);
-
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['role:admin'] ], function () {
