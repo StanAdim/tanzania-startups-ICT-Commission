@@ -25,7 +25,7 @@ const iconPath = computed(()=> `/images/icons/${props.icon}`)
 <template>
   <div class="card" :class="props.style">
     <div class="card-inner">
-      <div class="py-2 flex-1">
+      <div class="py-2 flex-1 flex justify-center">
         <!-- Replace with appropriate icon -->
         <img class="h-[60px] w-[60px] " :src="iconPath" :alt="props.title">
       </div>

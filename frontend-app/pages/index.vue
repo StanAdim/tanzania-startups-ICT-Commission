@@ -13,7 +13,7 @@ const globalData = useGlobalDataStore()
 <template>
   <div class="">
 <!--    section 1-->
-    <section class="h-[60vh] bg-fade-1">
+    <section class="md:h-[60vh]">
        <LandingTheHero />
     </section>
     <!--    section 2-->
@@ -21,9 +21,9 @@ const globalData = useGlobalDataStore()
       <LandingTheCategories />
     </section>
     <!--    section 3-->
-<!--    <section class="section">-->
-<!--        <LandingTheStats />-->
-<!--    </section>-->
+    <section class="section">
+        <LandingTheStats />
+    </section>
 <!--    &lt;!&ndash;    section 4&ndash;&gt;-->
 <!--    <section class="section">-->
 <!--       <LandingTheSolutions />-->

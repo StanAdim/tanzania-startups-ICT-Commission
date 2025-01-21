@@ -1,9 +1,9 @@
 <template>
-  <footer class="bg-black text-gray-400 py-8 px-4 sm:px-16">
+  <footer class="bg-sky-950 text-gray-400 py-8 px-4 sm:px-16">
     <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8">
       <!-- Logo Section -->
       <div class="flex items-center space-x-2">
-        <img src="/images/ictc-logo-white-opt.png" alt="ICT Commission Logo" class="h-24 w-auto">
+        <img src="/images/ictc-logo-white-opt.png" alt="ICT Commission Logo" class="max-h-44 w-auto">
       </div>
 
       <!-- Contact Information -->

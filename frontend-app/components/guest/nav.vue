@@ -44,6 +44,9 @@ const toggleMobileMenu = () => {
             <li class="nav-link">
               <nuxt-link to="/profiles/">Approved Registrations</nuxt-link>
             </li>
+            <li class="nav-link">
+              <nuxt-link to="/about">About</nuxt-link>
+            </li>
           </ul>
         </div>
 
