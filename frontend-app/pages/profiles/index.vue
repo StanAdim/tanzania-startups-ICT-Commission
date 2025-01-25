@@ -11,10 +11,10 @@ useHead({
 const globalData = useGlobalDataStore()
 const genStore = useGeneralStore()
 const dataItems = computed(() => [
-  { title: 'ICT Startups', path: '/profiles/startups', count: genStore.getStartupsCount },
-  { title: 'ICT Innovation Hubs', path: '/profiles/hubs', count: genStore.getHubsCount },
-  { title: 'Digital accelerators', path: '/profiles/accelerators', count: genStore.getAcceleratorsCount },
-  { title: 'Grassroot Programs', path: '/profiles/grassroots', count: genStore.getGrassrootsCount },
+  { title: 'ICT Startups', path: '/profiles/ict-startups', count: genStore.getStartupsCount },
+  { title: 'ICT Innovation Hubs', path: '/profiles/innovation-hubs', count: genStore.getHubsCount },
+  { title: 'Digital accelerators', path: '/profiles/digital-accelerators', count: genStore.getAcceleratorsCount },
+  { title: 'Grassroot Programs', path: '/profiles/grassroot-programmes', count: genStore.getGrassrootsCount },
 ])
 const init = async  () => {
   await Promise.all(

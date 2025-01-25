@@ -6,6 +6,10 @@ const props = defineProps({
     default: 'Title',
     type: String
   },
+  target: {
+    default: '/about#',
+    type: String
+  },
   description: {
     default: 'Title',
     type: String
@@ -33,11 +37,12 @@ const iconPath = computed(()=> `/images/icons/${props.icon}`)
         <h2 class="text-xl font-semibold">{{props.title}}</h2>
       </div>
     </div>
-    <div class="">
+    <div class="md:h-[22vh]">
       <p>{{props.description}}</p>
     </div>
-    <div class="">
-      <LargeBtn type="small" title="Read More"/>
+    <div class="my-4">
+      <NuxtLink class="border-2 border-sky-500 appBg  font-bold text-white  my-4 rounded-full px-8 py-2" :to="`/about#${props.target}`">Read More</NuxtLink>
+
     </div>
   </div>
 </template>
@@ -47,6 +52,6 @@ const iconPath = computed(()=> `/images/icons/${props.icon}`)
   @apply py-1 px-6 mx-2 shadow-2xl   rounded-md
 }
 .card-inner {
-  @apply flex flex-col  space-x-3 mb-4
+  @apply flex flex-col  space-x-2 mb-4
 }
 </style>

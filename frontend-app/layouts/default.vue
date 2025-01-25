@@ -10,6 +10,7 @@ const toggleSidebar = () => {
 const logout = async  ()=> {
   await auth.logout()
 }
+const date = new Date();
 </script>
 
 <template>
@@ -79,7 +80,7 @@ const logout = async  ()=> {
         <AuthNav :is-sidebar-open="isSidebarOpen" />
       </div>
     </div>
-      <footer class="bg-sky-50 border-t border-sky-300 p-2 text-center">{{config.public.instName}} @ 2024</footer>
+      <footer class="bg-sky-50 border-t border-sky-300 p-2 text-center">{{ config.public.instName }} @ {{ date.getFullYear() }}</footer>
   </div>
 </template>
 

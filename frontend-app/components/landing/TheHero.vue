@@ -18,9 +18,12 @@
         <!--              Description-->
         <div class="mt-4">
           <div class="md:w-2/3">
-            <p class="desc">This portal registers <span>ICT Startups</span> , <span>Developers</span> , <span>Incubators</span> , <span>Hubs</span>
+            <p class="desc">This portal registers
+              <span>ICT Startups</span>,
+              <span>Digital accelerators</span>,
+              <span>Incubators</span>, <span>Hubs</span>
               and <span>Grassroot Programs</span> along with their on going
-              Projects and products to create a network of actors in the
+              Projects and Products to create a network of actors in the
               ICT business ecosystem.</p>
           </div>
         </div>
