@@ -27,7 +27,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # Install PHP dependencies
-RUN composer install
+RUN composer update
 
 # Optimize Laravel application
 RUN php artisan optimize
