@@ -52,6 +52,12 @@ logs.dev:
 #-------------------------------------------------
 #Starting container - Production
 #-------------------------------------------------
+update.prod: 
+	git pull origin -ff
+	@make setup.prod
+	cd ./frontend-app && yarn build && pm2 restart ecosystem.config.cjs
+	cd ..
+	@make boost.prod
 
 setup.prod:
 	@make build.prod
@@ -68,24 +74,24 @@ up.prod:
 # Container mgt - Prod
 
 composer-update.prod:
-	docker exec  tzstartups-dev-api bash -c "composer update"
+	docker exec  tzstartups-api bash -c "composer update"
 data.prod:
-	docker exec  tzstartups-dev-api bash -c "php artisan migrate:fresh --seed"
+	docker exec  tzstartups-api bash -c "php artisan migrate:fresh --seed"
 bash.prod:
-	docker exec -it  tzstartups-dev-api bash
+	docker exec -it  tzstartups-api bash
 db-bash.prod:
 	docker exec -it postgres-db bash 
 start.prod:
 	docker compose restart
 boost.prod:
-	docker exec  tzstartups-dev-api bash -c "php artisan optimize"
-	docker exec  tzstartups-dev-api bash -c "composer dump-autoload"
-	docker exec  tzstartups-dev-api bash -c "chown -R www-data:www-data /var/www/html/storage /var/www/html/public /var/www/html/bootstrap/cache"
-	docker exec  tzstartups-dev-api bash -c "chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache"
+	docker exec  tzstartups-api bash -c "php artisan optimize"
+	docker exec  tzstartups-api bash -c "composer dump-autoload"
+	docker exec  tzstartups-api bash -c "chown -R www-data:www-data /var/www/html/storage /var/www/html/public /var/www/html/bootstrap/cache"
+	docker exec  tzstartups-api bash -c "chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache"
 rmi.prod:
-	docker image rm -f tzstartups-dev-api-tzstartups-dev-api
+	docker image rm -f tzstartups-api-tzstartups-api
 logs.prod:
-	docker logs -f tzstartups-dev-api
+	docker logs -f tzstartups-api
 
 
 

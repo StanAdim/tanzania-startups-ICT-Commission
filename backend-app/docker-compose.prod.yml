@@ -1,15 +1,15 @@
 version: '3'
 
 services:
-  tzstartups-dev-api:
-    image: tzstartups-dev-api
+  tzstartups-api:
+    image: tzstartups-api
     build:
       context: .
-      dockerfile: Dockerfile.dev
-    container_name: tzstartups-dev-api
+      dockerfile: Dockerfile.prod
+    container_name: tzstartups-api
     working_dir: /var/www/html
     ports:
-      - "1704:80"
+      - "1943:80"
     volumes:
       - .:/var/www/html/
     environment:
@@ -22,24 +22,24 @@ services:
     env_file:
       - .env
     networks:
-      - tzstartups-dev-api-network
+      - tzstartups-api-network
     depends_on:
-      - db
+      - tzstartupsdb
 
-  db:
+  tzstartupsdb:
     image: postgres:13.4
-    container_name: startupstz-db-dev
+    container_name: startupstz-db
     restart: unless-stopped
-    ports:
-      - "1740:5432"
+    # ports:
+    #   - "9134:5432"
     environment:
       POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     networks:
-      - tzstartups-dev-api-network
+      - tzstartups-api-network
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - tzstartups_pgdata:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE}"]
       interval: 10s
@@ -47,9 +47,9 @@ services:
       retries: 5
 
 volumes:
-  pgdata:
+  tzstartups_pgdata:
     driver: local
 
 networks:
-  tzstartups-dev-api-network:
+  tzstartups-api-network:
     driver: bridge
