@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   tzstartups-api:
     image: tzstartups-api
