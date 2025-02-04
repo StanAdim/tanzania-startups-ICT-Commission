@@ -26,7 +26,7 @@ class StartupResource extends JsonResource
         'fundingStage' => FundingStage::where('id',$this->funding_stage)->first()->name,
         'teamSize' => $this->team_size,
         'website' => $this->website,
-        'website' => $this->website,
+//        'website' => $this->website,
         'uid' => $this->uid,
         'name' => $this->startup_name,
 

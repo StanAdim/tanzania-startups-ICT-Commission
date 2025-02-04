@@ -16,7 +16,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <GuestButtonCard to="https://www.bot.go.tz/DFDI/Sandbox" label="Fintec" />
             <GuestButtonCard to="https://www.tcra.go.tz/" label="Communication" />
-            <GuestButtonCard to="https://www.cmsa.go.tz/" label="Capital Markets" />
+            <GuestButtonCard to="https://www.cmsa.go.tz/" label="Capital Investments" />
             <GuestButtonCard to="https://www.nmbbank.co.tz/" label="Cooperate Financial Solutions" />
             <GuestButtonCard to="/" label="Management" />
           </div>

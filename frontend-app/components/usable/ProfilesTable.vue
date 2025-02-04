@@ -9,6 +9,7 @@ const props = defineProps({
     type: Array
   },
 })
+
 const currentPage = ref <number>(1)
 const per_page = ref <number>(10)
 const searchQuery = ref('')
@@ -19,25 +20,24 @@ const movePage = async (type:number) => {
   }else {
     currentPage.value = currentPage.value - pageSwitchValue.value
   }
-  await progStore.retrieveAllProgrammes(per_page.value,currentPage.value)
+  // await progStore.retrieveAllProgrammes(per_page.value,currentPage.value)
 }
 // change page number
+const genStore = useGeneralStore()
 const  isEditing = ref(false)
 const toggleEditing =  () => isEditing.value = !isEditing.value
 const  updateData = async () => {
-  await progStore.retrieveAllProgrammes(per_page.value,currentPage.value)
+  // await progStore.retrieveAllProgrammes(per_page.value,currentPage.value)
 }
-// const  searchUserData = async () => {
-//   await progStore.retrieveAllProgrammes(per_page.value,currentPage.value, searchQuery.value)
-// }
-
+const  searchUserData = async () => {
+  await genStore.retrieveApprovedProfiles('startups', searchQuery.value , per_page.value)
+}
 </script>
 
 <template>
   <div class="">
     <div class="mt-2 bg-sky-100 p-2">
       <div class="flex justify-end items-center gap-2 mb-2 mx-4">
-        <!--      <UsableNewFeatureBtn @click.prevent="navigateTo('/profile/projects/create')" :is-normal="true" name="Add New" iconClass="fa-solid fa-plus" />-->
         <div class="">
           <input
               v-model="searchQuery"
@@ -70,7 +70,8 @@ const  updateData = async () => {
                 class="hover:bg-sky-100">
               <td class="table-data">{{ index + 1 }}</td>
               <td class="table-data">{{ item?.name }}</td>
-              <td class="table-data">{{ item?.loc }}</td>
+              <td class="table-data">{{ item?.industry }}</td>
+              <td class="table-data">{{ item?.location }}</td>
             </tr>
             <tr v-else class="text-center font-bold">No Data Found</tr>
             </tbody>

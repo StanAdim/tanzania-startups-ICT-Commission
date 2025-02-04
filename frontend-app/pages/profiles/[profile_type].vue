@@ -1,27 +1,9 @@
 <script setup lang="ts">
-import Router from "#app/plugins/router";
-
-definePageMeta({
-  layout: 'landing',
-})
-useHead({
-  title: 'Profile List',
-})
-const categories = [
-  {title: 'ICT Grassroot Programmes', key : 'grassroot-programs',  description: '....'},
-  {title: 'ICT Startup', key : 'ict-startups',  description: '....'},
-  {title: 'ICT Innovation Hub', key : 'innovation-hubs',  description: '....'},
-  {title: 'Digital Accelerators', key : 'digital-accelerators',  description: '....'},
-]
-const globalData = useGlobalDataStore()
-const init = async  () => {
-  console.log('Profile type Page')
-}
-onNuxtReady(()=> {
-  init()
-})
-
+definePageMeta({ layout: 'landing',})
+useHead({ title: 'Profile List',})
 const route = useRoute()
+const globalData = useGlobalDataStore()
+const generalStore = useGeneralStore()
 
 const renderTitle = computed(() => {
   return route.params.profile_type
@@ -30,14 +12,32 @@ const renderTitle = computed(() => {
       .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize each word
       .join(' '); // Join the words back into a single string
 });
-const headers = ref(['Sn', "Name","Location"])
-const profiles = [
-  {name: ' Name', loc: 'None'},
-  {name: ' Name', loc: 'None'},
-  {name: ' Name', loc: 'None'},
-  {name: ' Name', loc: 'None'},
-]
 
+const category = ref('')
+const init = async  () => {
+  switch (route.params.profile_type){
+    case 'grassroot-programmes':
+      category.value = 'grassroots';
+      break;
+    case 'ict-startups':
+      category.value = 'startups';
+      break;
+      case 'digital-accelerators':
+      category.value = 'accelerators';
+      break;
+    case 'innovation-hubs':
+      category.value = 'hubs';
+      break;
+    default:
+      category.value = 'startups'
+
+  }
+  await generalStore.retrieveApprovedProfiles(category.value)
+}
+onNuxtReady(()=> {
+  init()
+})
+const headers = ref(['Sn', "Name",'Based On', "Location"])
 </script>
 <template>
   <div class="container mx-auto">
@@ -46,7 +46,7 @@ const profiles = [
         <div class="w-full  px-4 sm:px-6 lg:px-8">
           <div class="">
             <h3 class="text-lg font-extrabold text-sky-900  mt-4"> Registered {{ renderTitle }}</h3>
-                <UsableProfilesTable :data="profiles" :headers="headers" />
+                <UsableProfilesTable :data="generalStore.getApprovedProfiles?.data" :headers="headers" />
           </div>
         </div>
         <div class="mt-10 pb-1">

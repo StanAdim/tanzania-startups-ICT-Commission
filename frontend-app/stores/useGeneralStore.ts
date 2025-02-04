@@ -15,7 +15,9 @@ export const useGeneralStore = defineStore('generalStore', () => {
         accelerators: 0,
         grassroots: 0,
     })
+
     const sectors = ref([])
+    const approvedProfiles = ref([])
     const fundingStages = ref([])
     const regions = ref([])
     const blobDataFile = ref(null)
@@ -31,6 +33,7 @@ export const useGeneralStore = defineStore('generalStore', () => {
     const getRegions : ComputedRef<[]> = computed(() => {return regions.value?.data})
     const getBlobDataFile : ComputedRef<[]> = computed(() => {return blobDataFile.value})
     const getBlobDataFileName : ComputedRef<[]> = computed(() => {return blobDataName.value})
+    const getApprovedProfiles : ComputedRef<[]> = computed(() => {return approvedProfiles.value})
 
     // Actions
     const resetBlobData = () => {
@@ -73,6 +76,14 @@ export const useGeneralStore = defineStore('generalStore', () => {
             globalStore.handleApiError(error.value)
         }
     }
+    async function retrieveApprovedProfiles(type:string, search:string = '', per_page:number = 10) : Promise<[]>{
+        const {data,error} = await useApiFetch(`/api/approved-profiles/${type}?per_page=${per_page}&search=${search}`);
+        if(data.value){
+            approvedProfiles.value = data.value;
+        }if(error) {
+            globalStore.handleApiError(error.value)
+        }
+    }
     //handle file preview
 
     const previewFile = async (file_data) : Promise => {
@@ -98,5 +109,6 @@ export const useGeneralStore = defineStore('generalStore', () => {
         getFundingStage,retrieveFundingStages,
         retrieveRegions, getRegions,
         getBlobDataFileName,getBlobDataFile,previewFile, resetBlobData,
+        retrieveApprovedProfiles,getApprovedProfiles
     }
 })

@@ -9,10 +9,10 @@
         <!--              title-->
         <div class="">
           <div class="md:text-[60px] text-[30px]   md:mt-12 mt-2">
-            <div class="leading-none py-0.5 font-extrabold"><span class="appColor">ICT</span> innovation</div>
-            <div class="leading-none py-0.5 font-extrabold">Solutions and</div>
-            <div class="leading-none py-0.5 font-extrabold">Investment</div>
-            <div class="leading-none py-0.5 font-extrabold appColor">Ecosystem Portal</div>
+            <div class="leading-none py-0.5 font-extrabold"><span class="appColor">ICT Innovation</span> </div>
+            <div class="leading-none py-0.5 font-extrabold appColor">and</div>
+            <div class="leading-none py-0.5 font-extrabold appColor">Promotion Portal</div>
+            <div class="leading-none py-0.5 font-extrabold appColor"></div>
           </div>
         </div>
         <!--              Description-->
@@ -21,7 +21,7 @@
             <p class="desc">This portal registers
               <span>ICT Startups</span>,
               <span>Digital accelerators</span>,
-              <span>Incubators</span>, <span>Hubs</span>
+              <span>Incubation Hubs</span>
               and <span>Grassroot Programs</span> along with their on going
               Projects and Products to create a network of actors in the
               ICT business ecosystem.</p>

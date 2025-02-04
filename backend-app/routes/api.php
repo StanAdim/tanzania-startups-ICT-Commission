@@ -24,6 +24,8 @@ Route::get('/document-types', [GeneralController::class, 'document_types']);
 Route::get('/funding-stages', [GeneralController::class, 'fundingStages']);
 Route::get('/tanzania-regions', [GeneralController::class, 'getRegions']);
 Route::post('/register-user-with-profile', [ProfileController::class, 'registerUserWithProfile']);
+Route::get('/approved-profiles/{type}', [GeneralController::class, 'approvedProfiles']);
+
 
 //User auth Routes
 Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {

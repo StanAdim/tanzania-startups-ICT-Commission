@@ -24,8 +24,7 @@ class GrassrootProgramResource extends JsonResource
             'status' => $this->status,
             'description' => $this->brief_description,
             'registrationDate'=> Carbon::parse($this->created_at)->format('j M, Y, H:i'),
-                    // Profileable data
-
+            // Profileable data
             'phone' => $this->profile->phone_number,
             'email' => $this->profile->email,
             'region' => Region::where('id', $this->profile->region)->first()->region,

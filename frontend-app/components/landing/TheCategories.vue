@@ -2,7 +2,7 @@
 const categories = [
   {title: 'Grassroot Programmes',
     icon: 'grassroot.png',
-    target: 'grassroot-programs',
+    target: 'grassroot-programmes',
     description : 'Designed to stimulate ICT innovations at lower ages such as in Primary\n' +
         ' school level and secondary school level. Aim to stimulate the students\n' +
         ' mindset to see potential in science and technology and developing solutions that tap daily life community problems.' ,
@@ -20,7 +20,7 @@ const categories = [
   //   target: '',
   //   description : 'Registered businesses or enterprises which use ICT innovations in offering their services. The nature of SMEs are normally registered Sole proprietor businesses, or partnership firms.' ,
   //   style: 'bg-yellow-400 text-black'},
-  { title: 'ICT Innovation Hub',
+  { title: 'ICT Incubation Hubs',
     icon: 'Innovation-hubs.png',
     target: 'innovation-hubs',
     description : 'A cutting-edge digital technology individuals who solve society business problems and\n' +
