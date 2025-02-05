@@ -14,38 +14,56 @@ class FundingStageSeeder extends Seeder
     public function run(): void
     {
         $stages = [
+//            [
+//                'name' => 'Pre-Seed',
+//                'description' => 'Early funding from founders, friends, or angel investors to develop an idea or MVP.'
+//            ],
+//            [
+//                'name' => 'Seed',
+//                'description' => 'First official funding round to build the team, product, and acquire initial customers.'
+//            ],
+//            [
+//                'name' => 'Series A',
+//                'description' => 'Funding to scale operations, refine the product, and optimize the business model.'
+//            ],
+//            [
+//                'name' => 'Series B',
+//                'description' => 'Growth-focused funding to expand market reach and enhance infrastructure.'
+//            ],
+//            [
+//                'name' => 'Series C',
+//                'description' => 'Funding for mature startups to expand globally, launch new products, or prepare for IPO.'
+//            ],
+//            [
+//                'name' => 'Mezzanine / Bridge',
+//                'description' => 'Funding to position the company for a major event like an IPO or acquisition.'
+//            ],
+//            [
+//                'name' => 'IPO',
+//                'description' => 'Company offers shares to the public to raise significant capital.'
+//            ],
+//            [
+//                'name' => 'Bootstrapping',
+//                'description' => 'Self-funded growth with no external investors, common in niche startups.'
+//            ]
             [
-                'name' => 'Pre-Seed',
+                'name' => 'Ideation Stage',
                 'description' => 'Early funding from founders, friends, or angel investors to develop an idea or MVP.'
             ],
             [
-                'name' => 'Seed',
+                'name' => 'Prototype Stage',
                 'description' => 'First official funding round to build the team, product, and acquire initial customers.'
             ],
             [
-                'name' => 'Series A',
+                'name' => 'Acceleration Stage',
                 'description' => 'Funding to scale operations, refine the product, and optimize the business model.'
             ],
             [
-                'name' => 'Series B',
+                'name' => 'Commercial Stage',
                 'description' => 'Growth-focused funding to expand market reach and enhance infrastructure.'
             ],
-            [
-                'name' => 'Series C',
-                'description' => 'Funding for mature startups to expand globally, launch new products, or prepare for IPO.'
-            ],
-            [
-                'name' => 'Mezzanine / Bridge',
-                'description' => 'Funding to position the company for a major event like an IPO or acquisition.'
-            ],
-            [
-                'name' => 'IPO',
-                'description' => 'Company offers shares to the public to raise significant capital.'
-            ],
-            [
-                'name' => 'Bootstrapping',
-                'description' => 'Self-funded growth with no external investors, common in niche startups.'
-            ]
+
+
         ];
         foreach ($stages as $item){
             FundingStage::create($item);
