@@ -55,10 +55,13 @@ class GeneralController extends Controller
     /**
      * Get profile configuration for a specific type
      */
-    protected function getProfileConfig($type){
+    protected function getProfileConfig($type)
+    {
         return $this->typeModels[$type] ?? null;
     }
-    public function profileCount($type) : JsonResponse{
+
+    public function profileCount($type): JsonResponse
+    {
         $Items = match ($type) {
             'startups' => StartupProfile::all()->count(),
             "hubs" => HubProfile::all()->count(),
@@ -67,12 +70,13 @@ class GeneralController extends Controller
             default => 0,
         };
         return response()->json([
-            'message' => 'Success!, '.$type.' count',
+            'message' => 'Success!, ' . $type . ' count',
             'count' => $Items
-        ],200);
-   }
+        ], 200);
+    }
 
-    public function approvedProfiles($type, Request $request) {
+    public function approvedProfiles($type, Request $request)
+    {
         $profileConfig = $this->getProfileConfig($type);
         if (!$profileConfig) {
             return response()->json([
@@ -91,22 +95,20 @@ class GeneralController extends Controller
         $perPage = $request->input('per_page', 10);
 
         // Build query
-        $query = $modelClass::query()->orderBy('id', 'desc');
+        $query = $modelClass::query()->where('status', true)->orderBy('id', 'desc');
 
         // Apply search if search term exists
         if ($search) {
             $query->where(function ($q) use ($search, $searchFields) {
                 foreach ($searchFields as $field) {
-                    $q->orWhereRaw("LOWER($field) LIKE ?", ["%".strtolower($search)."%"]);
+                    $q->orWhereRaw("LOWER($field) LIKE ?", ["%" . strtolower($search) . "%"]);
                 }
             });
         }
         // Paginate results
         $items = $query->paginate($perPage);
-
         // Transform results
         $data = $resourceClass::collection($items);
-
         // Return paginated response
         return response()->json([
             'message' => "Success! All {$type}",
@@ -121,52 +123,61 @@ class GeneralController extends Controller
             ],
         ], 200);
     }
-   public function sectors () : JsonResponse{
-            $items = ICTSector::orderBy('name', 'asc')->get()->map(function ($sector) {
-                return [
-                    'value' => $sector->id,
-                    'label' => $sector->name,
-                ];
-            });
-            return response()->json([
+
+    public function sectors(): JsonResponse
+    {
+        $items = ICTSector::orderBy('name', 'asc')->get()->map(function ($sector) {
+            return [
+                'value' => $sector->id,
+                'label' => $sector->name,
+            ];
+        });
+        return response()->json([
             'message' => 'Sectors',
             'data' => $items
-        ],200);
-   }   public function document_types (): JsonResponse {
-            $items = DocumentType::all()->map(function ($type) {
-                return [
-                    'value' => $type->id,
-                    'label' => $type->name,
-                ];
-            });
-            return response()->json([
+        ], 200);
+    }
+
+    public function document_types(): JsonResponse
+    {
+        $items = DocumentType::all()->map(function ($type) {
+            return [
+                'value' => $type->id,
+                'label' => $type->name,
+            ];
+        });
+        return response()->json([
             'message' => 'types',
             'data' => $items
-        ],200);
-   }
-   public function fundingStages (): JsonResponse{
-            $items = FundingStage::orderBy('name', 'asc')->get()->map(function ($sector) {
-                return [
-                    'value' => $sector->id,
-                    'label' => $sector->name,
-                    'description' => $sector->description,
-                ];
-            });
-            return response()->json([
+        ], 200);
+    }
+
+    public function fundingStages(): JsonResponse
+    {
+        $items = FundingStage::orderBy('name', 'asc')->get()->map(function ($sector) {
+            return [
+                'value' => $sector->id,
+                'label' => $sector->name,
+                'description' => $sector->description,
+            ];
+        });
+        return response()->json([
             'message' => 'Funding stages',
             'data' => $items
-        ],200);
-   }
-   public function getRegions () : JsonResponse{
-            $items = Region::all()->map(function ($sector) {
-                return [
-                    'value' => $sector->id,
-                    'label' => $sector->region,
-                ];
-            });
-            return response()->json([
+        ], 200);
+    }
+
+    public function getRegions(): JsonResponse
+    {
+        $items = Region::all()->map(function ($sector) {
+            return [
+                'value' => $sector->id,
+                'label' => $sector->region,
+            ];
+        });
+        return response()->json([
             'message' => 'Regions',
             'data' => $items
-        ],200);
-   }
+        ], 200);
+    }
 }

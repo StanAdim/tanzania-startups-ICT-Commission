@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\FileExportController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\IctProductController;
 use App\Http\Controllers\ProfileController;
@@ -103,6 +104,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin'] ], function ()
 
     Route::post('/create-document-type', [DocumentController::class, 'create_document_type']);
     Route::delete('/delete-document-type/{doc_type_uid}', [DocumentController::class, 'delete_document_type']);
+
+    // Excel and file exports
+    Route::get('/export-{type}-report', [FileExportController::class, 'exportProfile']);
+    Route::get('/file-preview', [FileExportController::class, 'downloadFile']);
 
 });
 

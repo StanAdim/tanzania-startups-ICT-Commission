@@ -1,7 +1,9 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
+
   modules:
       ["@nuxtjs/tailwindcss", '@pinia/nuxt', '@element-plus/nuxt'],
+
   app: {
     pageTransition: { name: 'page', mode: 'out-in' , name: 'fade' },
     layoutTransition: { name: 'layout', mode: 'out-in' ,    name: 'bounce',},
@@ -30,6 +32,7 @@ export default defineNuxtConfig({
       mode: 'out-in' // default
     },
   },
+
   runtimeConfig:{
     public:{
       appName:  'Tanzania Startups',
@@ -38,10 +41,13 @@ export default defineNuxtConfig({
       baseUrl: process.env.BASE_URL,
     }
   },
+
   css:[
     "~/assets/css/app.css",
     "~/assets/fontawesome/css/fontawesome.min.css",
     "~/assets/fontawesome/css/solid.min.css",
     "~/assets/fontawesome/css/brands.min.css",
-  ]
+  ],
+
+  compatibilityDate: '2025-02-06',
 })

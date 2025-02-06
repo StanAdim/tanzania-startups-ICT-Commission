@@ -86,12 +86,12 @@ const init = async () =>  {
 onNuxtReady(()=> {
   init()
 })
-</script>
 
+</script>
 <template>
   <div class="mt-2 bg-sky-100 p-2">
     <div class="flex justify-end items-center gap-2 mb-2 mx-4">
-<!--      <UsableNewFeatureBtn @click.prevent="navigateTo('/profile/projects/create')" :is-normal="true" name="Add New" iconClass="fa-solid fa-plus" />-->
+        <AdminExportExcelBtn file-type="startups" file-name="startups-list" />
       <div class="">
         <input
             v-model="searchQuery"

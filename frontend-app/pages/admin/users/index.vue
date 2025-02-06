@@ -87,6 +87,8 @@ onNuxtReady(()=> {
 <template>
   <div class="mt-2">
     <div class="flex justify-end items-center gap-2 mb-2 mx-4">
+      <AdminExportExcelBtn file-type="users" file-name="system-users-list" />
+
       <div class="">
         <input
             v-model="searchQuery"

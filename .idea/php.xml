@@ -133,6 +133,12 @@
       <path value="$PROJECT_DIR$/backend-app/vendor/phpunit/php-code-coverage" />
       <path value="$PROJECT_DIR$/backend-app/vendor/hamcrest/hamcrest-php" />
       <path value="$PROJECT_DIR$/backend-app/vendor/voku/portable-ascii" />
+      <path value="$PROJECT_DIR$/backend-app/vendor/maennchen/zipstream-php" />
+      <path value="$PROJECT_DIR$/backend-app/vendor/ezyang/htmlpurifier" />
+      <path value="$PROJECT_DIR$/backend-app/vendor/maatwebsite/excel" />
+      <path value="$PROJECT_DIR$/backend-app/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/backend-app/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/backend-app/vendor/phpoffice/phpspreadsheet" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />

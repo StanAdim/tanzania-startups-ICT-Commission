@@ -1,4 +1,3 @@
-import {useApiFetch} from "~/composables/useApiFetch";
 
 export const useDocumentStore = defineStore('documentStore', () => {
 
@@ -8,6 +7,9 @@ export const useDocumentStore = defineStore('documentStore', () => {
     const docList = ref(null)
     const documentCategories = ref([])
     const previewModalStatus = ref(false)
+    const blobDataFile = ref(null)
+
+
 
     // Getters
     const getDocumentList : ComputedRef<[]> = computed(() => {return docList.value})
@@ -138,6 +140,59 @@ export const useDocumentStore = defineStore('documentStore', () => {
         }
     }
 
+    // Function to initiate the download of users' Excel file
+    const handleExcelFileExport = async (file_type:string, file_name:string = 'simple_exported_file' ): Promise<void> => {
+        globalStore.toggleContentLoaderState(true)
+        const returned_file_path = ref('')
+        try {
+            const { data, error } = await useApiFetch(`/api/admin/export-${file_type}-report`, {
+                accept: "application/json",
+            });
+            returned_file_path.value = data.value?.path;
+            globalStore.toggleContentLoaderState(false)
+            if (!returned_file_path.value) {
+                throw new Error('File path not received');
+            }
+        } catch (error) {
+            console.error('Error downloading file:', error);
+        }
+        if (returned_file_path.value !=''){
+            await downloadStoredFile(returned_file_path.value, file_name);
+        }else {
+            console.log('No file path returned')
+        }
+    };
+
+// Function to download a file given its path
+    const downloadStoredFile = async (pass_path: string, file_name: string = "file") : Promise => {
+        globalStore.toggleContentLoaderState(true)
+        const { data, error } = await useApiFetch(`/api/admin/file-preview?name=${encodeURIComponent(pass_path)}`, {
+            'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' // Set to Excel MIME type
+        });
+        if (data.value) {
+            const blob = new Blob([data.value],
+                { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }); // Set blob type to Excel
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `${file_name}-file.xlsx`); // Change the file extension to .xlsx
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Clean up the URL object
+            URL.revokeObjectURL(url);
+            globalStore.toggleContentLoaderState(false)
+            globalStore.assignAlertMessage('File Downloaded', 'success')
+        }
+        if (error.value) {
+            console.log(error.value);
+            globalStore.toggleBtnLoadingState(false)
+            globalStore.assignAlertMessage(error.value?.message, 'error')
+        }
+    };
+
 
 
 
@@ -149,5 +204,6 @@ export const useDocumentStore = defineStore('documentStore', () => {
         updateDocStatus,uploadNewDocument,
         retrieveDocumentTypes, createUpdateDocumentType,
         deleteDocType,
+        handleExcelFileExport,
     }
 })
