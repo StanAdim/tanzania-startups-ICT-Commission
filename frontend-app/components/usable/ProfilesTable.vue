@@ -73,7 +73,9 @@ const  searchUserData = async () => {
               <td class="table-data">{{ item?.industry }}</td>
               <td class="table-data">{{ item?.location }}</td>
             </tr>
-            <tr v-else class="text-center font-bold">No Data Found</tr>
+            <tr v-else class="text-center font-bold">
+              <td class="py-2">... <span class="text-red-400 text-sm">Empty data</span></td>
+            </tr>
             </tbody>
           </table>
         </div>
