@@ -21,13 +21,17 @@ const props = defineProps({
   style: {
     default: 'bg-blue-500 text-white',
     type: String
+  },
+  aosForm: {
+    default: 'fade-right',
+    type: String
   }
 })
 const iconPath = computed(()=> `/images/icons/${props.icon}`)
 </script>
 
 <template>
-  <div class="card" :class="props.style">
+  <div class="card" :class="props.style" data-aos-delay="400" :data-aos="props?.aosForm">
     <div class="card-inner">
       <div class="py-2 flex-1 flex justify-center">
         <!-- Replace with appropriate icon -->

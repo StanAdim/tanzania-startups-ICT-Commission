@@ -21,7 +21,7 @@ onNuxtReady(()=> {
 <template>
   <div class="container mx-auto bg-gray-100/60 p-8 rounded-lg">
     <!-- Left Section: Statistics -->
-    <div class=" flex md:flex-row flex-col gap-2 justify-between">
+    <div class=" flex md:flex-row flex-col gap-2 justify-between" data-aos-delay="300" data-aos="fade-right">
       <GuestStatItem color="yellow-500" :number="`${genStore.getGrassrootsCount} +`" label="Grassroot Programs" />
       <GuestStatItem color="blue-500" :number="`${genStore.getStartupsCount} +`" label="ICT Startups" />
       <GuestStatItem color="green-500" :number="`${genStore.getHubsCount} +`" label="Incubation Hubs" />

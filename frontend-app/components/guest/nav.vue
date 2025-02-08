@@ -41,19 +41,19 @@ const toggleMobileMenu = () => {
 
         <div class="logo">
           <nuxt-link to="/">
-            <img src="/images/ictc-logo-white-opt.png" alt="logo dark" />
+            <img data-aos-delay="400" data-aos="zoom-in" src="/images/ictc-logo-white-opt.png" alt="logo dark" />
           </nuxt-link>
 
         </div>
 
         <!-- Accounts -->
         <div class="flex flex-row flex-wrap gap-2 mx-2">
-          <div class="login">
+          <div class="login" data-aos-delay="400" data-aos="slide-left">
             <nuxt-link to="/login">
               <button class="btn border-black">Login</button>
             </nuxt-link>
           </div>
-          <div class="register">
+          <div class="register" data-aos-delay="400" data-aos="slide-left">
             <nuxt-link to="/register">
               <button class="btn appBg text-white border-sky-500">
                 Register

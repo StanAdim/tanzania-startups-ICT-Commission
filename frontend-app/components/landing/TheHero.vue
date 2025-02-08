@@ -9,9 +9,9 @@
         <!--              title-->
         <div class="">
           <div class="md:text-[60px] text-[30px]   md:mt-12 mt-2">
-            <div class="leading-none py-0.5 font-extrabold"><span class="appColor">ICT Innovation</span> </div>
-            <div class="leading-none py-0.5 font-extrabold appColor">and</div>
-            <div class="leading-none py-0.5 font-extrabold appColor">Promotion Portal</div>
+            <div class="leading-none py-0.5 font-extrabold" data-aos="fade-up"><span class="appColor">ICT Innovation</span> </div>
+            <div class="leading-none py-0.5 font-extrabold appColor" data-aos="slide-left">and</div>
+            <div class="leading-none py-0.5 font-extrabold appColor" data-aos="fade-left">Promotion Portal</div>
             <div class="leading-none py-0.5 font-extrabold appColor"></div>
           </div>
         </div>
@@ -28,16 +28,16 @@
           </div>
         </div>
         <!--              btn-->
-        <div class="mt-4">
+        <div class="mt-4 ">
           <nuxt-link to="/register" >
-            <button type="button" class="sm:w-auto  rounded-full bg-green-600 text-white font-semibold py-4 px-10  hover:bg-green-700">
+            <button data-aos="slide-left"  type="button" class="sm:w-auto  rounded-full bg-green-600 text-white font-semibold py-4 px-10  hover:bg-green-700">
               Register Now →
             </button>
           </nuxt-link>
         </div>
       </div>
       <div class="md:w-1/2 hidden md:block">
-        <div class="bg-cover h-[60vh] bg-center bg-no-repeat bg-[url('/images/img-opt.png')]" ></div>
+        <div class="bg-cover h-[60vh] bg-center bg-no-repeat bg-[url('/images/img-opt.png')]" data-aos="fade-down" ></div>
 <!--        <div class="flex justify-end max-h-fit">-->
 <!--          <img class="h-[60vh]" src="/images/img(8).png" alt="">-->
 <!--        </div>-->

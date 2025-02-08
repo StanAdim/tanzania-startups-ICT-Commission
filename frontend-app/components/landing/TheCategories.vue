@@ -2,6 +2,7 @@
 const categories = [
   {title: 'Grassroot Programmes',
     icon: 'grassroot.png',
+    aosForm:'slide-right',
     target: 'grassroot-programmes',
     description : 'Designed to stimulate ICT innovations at lower ages such as in Primary\n' +
         ' school level and secondary school level. Aim to stimulate the students\n' +
@@ -9,6 +10,7 @@ const categories = [
     style: 'bg-yellow-400 text-black'},
   {title: 'ICT Startups',
     icon: 'startups.png',
+    aosForm:'zoom-in',
     target: 'ict-startups',
     description : 'An Information and Communication Technology company in the first stages of operations,\n' +
         ' founded by one or more entrepreneurs who want to develop a product or service for which \n' +
@@ -17,11 +19,13 @@ const categories = [
 
   // { title: 'ICT Small / Medium Companies',
   //   icon: 'corporate-culture.png',
+  //   aosForm:'fade-right',
   //   target: '',
   //   description : 'Registered businesses or enterprises which use ICT innovations in offering their services. The nature of SMEs are normally registered Sole proprietor businesses, or partnership firms.' ,
   //   style: 'bg-yellow-400 text-black'},
   { title: 'ICT Incubation Hubs',
     icon: 'Innovation-hubs.png',
+    aosForm:'zoom-in',
     target: 'innovation-hubs',
     description : 'A cutting-edge digital technology individuals who solve society business problems and\n' +
         ' normally have working prototypes or Minimum viable products or full functioning products developed ready for use.' ,
@@ -30,12 +34,14 @@ const categories = [
   // {
   //   title: 'Grant Programs',
   //   icon: 'charity.png',
+  //   aosForm:'slide-left',
   //   target: '',
   //   description : 'Different ways the government funds innovation ideas and projects to provide public services and\n' +
   //       ' stimulate the economy. Grants normally are provided to support critical recovery initiatives, innovative research.' ,
   //   style: 'bg-green-500 text-white' },
   {title: 'ICT Digital Accelerators',
     icon: 'accelerators.png',
+    aosForm:'slide-left',
     target: 'digital-accelerators',
     description : 'Institution that nurtures entrepreneurs to create successful ICT start ups\n' +
         ' and provide a set of designed services to foster their growth for a specific period of time.\n' +
@@ -50,7 +56,7 @@ const categories = [
       <GuestCardCategory
           v-for="item in categories"
           :key="item.title" :title="item.title"
-          :style="item.style" :icon="item.icon"
+          :style="item.style" :icon="item.icon" :aos-form="item?.aosForm"
           :description="item.description" :target="item.target"
       />
 
