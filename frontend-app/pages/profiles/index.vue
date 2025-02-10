@@ -11,10 +11,10 @@ useHead({
 const globalData = useGlobalDataStore()
 const genStore = useGeneralStore()
 const dataItems = computed(() => [
-  { title: 'ICT Startups', path: '/profiles/ict-startups', count: genStore.getStartupsCount },
-  { title: 'ICT Incubation Hubs', path: '/profiles/innovation-hubs', count: genStore.getHubsCount },
-  { title: 'Digital accelerators', path: '/profiles/digital-accelerators', count: genStore.getAcceleratorsCount },
-  { title: 'Grassroot Programs', path: '/profiles/grassroot-programmes', count: genStore.getGrassrootsCount },
+  { title: 'ICT Startups', path: '/profiles/ict-startups', count: genStore.getStartupsCount, aos: 'fade-up'},
+  { title: 'ICT Incubation Hubs', path: '/profiles/innovation-hubs', count: genStore.getHubsCount, aos: 'fade-down'},
+  { title: 'Digital accelerators', path: '/profiles/digital-accelerators', count: genStore.getAcceleratorsCount, aos: 'fade-up'},
+  { title: 'Grassroot Programs', path: '/profiles/grassroot-programmes', count: genStore.getGrassrootsCount, aos: 'fade-down'},
 ])
 const init = async  () => {
   await Promise.all(
@@ -36,7 +36,8 @@ onNuxtReady(()=> {
       <div class="bg-sky-50 py-8 pt-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl font-extrabold text-sky-900 sm:text-4xl">
+            <h2 class="text-3xl font-extrabold text-sky-900 sm:text-4xl"
+                data-aos="zoom-in" data-aos-duration="1000">
                ICT startups, Incubation hubs and Digital accelerator ecosystem
             </h2>
 <!--            <p class="mt-3 text-xl text-sky-500 sm:mt-4">-->
@@ -53,6 +54,7 @@ onNuxtReady(()=> {
 
                   <GuestMinorProfileCard
                       v-for="item in dataItems"
+                      :aos="item?.aos"
                       :key="item.path"
                       :title="item.title"
                       :path="item.path"

@@ -35,11 +35,12 @@ const  searchUserData = async () => {
 </script>
 
 <template>
-  <div class="">
+  <div class="" data-aos="zoom-in" data-aos-duration="1000">
     <div class="mt-2 bg-sky-100 p-2">
       <div class="flex justify-end items-center gap-2 mb-2 mx-4">
         <div class="">
           <input
+              data-aos="slide-right" data-aos-duration="2000"
               v-model="searchQuery"
               @keyup.enter="searchUserData"
               type="text"

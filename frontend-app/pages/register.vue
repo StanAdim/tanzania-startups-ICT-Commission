@@ -6,10 +6,10 @@ definePageMeta({
 const globalData = useGlobalDataStore()
 const config = useRuntimeConfig();
 const options = [
-  {label: 'ICT Startup', path: '/registrations/ict-startups' , style: 'bg-blue-400 text-white',     icon: 'startups.png',},
-  {label: 'Incubation Hub', path: '/registrations/innovation-hubs' , style: 'bg-green-400 text-black',     icon: 'Innovation-hubs.png',},
-  {label: 'Digital Accelerator', path: '/registrations/digital-accelerators' , style: 'bg-black text-white',     icon: 'accelerators.png',},
-  {label: 'Grassroot Program', path: '/registrations/grassroot-programs' , style: 'bg-yellow-400 text-black',     icon: 'grassroot.png',},
+  {label: 'ICT Startup', path: '/registrations/ict-startups' , style: 'bg-blue-400 text-white',     icon: 'startups.png', aos: 'fade-up'},
+  {label: 'Incubation Hub', path: '/registrations/innovation-hubs' , style: 'bg-green-400 text-black',     icon: 'Innovation-hubs.png', aos: 'fade-down'},
+  {label: 'Digital Accelerator', path: '/registrations/digital-accelerators' , style: 'bg-black text-white',     icon: 'accelerators.png', aos: 'fade-up'},
+  {label: 'Grassroot Program', path: '/registrations/grassroot-programs' , style: 'bg-yellow-400 text-black',     icon: 'grassroot.png', aos: 'fade-down'},
   // "Graphic Designer",
   // "Large Company",
   // "Investor"
@@ -33,11 +33,12 @@ const iconPath = (icon) => `/images/icons/${icon}`
                 v-for="option in options"
                 :key="option"
                 :class="option.style"
+                :data-aos="option?.aos" data-aos-duration="1000"
                 class="flex md:items-center text-center flex-col justify-center
                 hover:text-white text-black hover:cursor-pointer m-1 h-48 w-64 rounded-lg border border-white shadow-md  transition">
               <div class="flex justify-center">
                 <!-- Replace with appropriate icon -->
-                <img class="h-[50px] w-[50px] " :src="iconPath(option?.icon)" :alt="option.label">
+                <img :data-aos="option?.aos" data-aos-duration="1000" class="h-[50px] w-[50px] " :src="iconPath(option?.icon)" :alt="option.label">
               </div>
               <nuxt-link :to="option.path" >
                 <div class=" font-semibold text-xl">{{ option.label }}</div>

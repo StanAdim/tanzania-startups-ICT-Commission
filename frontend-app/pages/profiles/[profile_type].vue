@@ -45,7 +45,7 @@ const headers = ref(['Sn', "Name",'Based On', "Location"])
       <div class="bg-sky-50 py-8 pt-10">
         <div class="w-full  px-4 sm:px-6 lg:px-8">
           <div class="">
-            <h3 class="text-lg font-extrabold text-sky-900  mt-4">Approved {{ renderTitle }}</h3>
+            <h3 data-aos="slide-down" data-aos-duration="1000" class="text-lg font-extrabold text-sky-900  mt-4">Approved {{ renderTitle }}</h3>
                 <UsableProfilesTable :data="generalStore.getApprovedProfiles?.data" :headers="headers" />
           </div>
         </div>
