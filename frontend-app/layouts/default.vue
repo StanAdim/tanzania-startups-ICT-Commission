@@ -45,6 +45,11 @@ const date = new Date();
                     </nuxt-link>
                   </el-dropdown-item>
                   <el-dropdown-item>
+                    <nuxt-link to="/admin/dashboard">
+                      <div class="hover:bg-sky-100 p-0.5 my-0.5 rounded-md px-1"><i class="pr-2 fa-solid fa-user-gear"></i>Admin Dashboard</div>
+                    </nuxt-link>
+                  </el-dropdown-item>
+                  <el-dropdown-item>
                     <div @click.prevent="logout" class="hover:bg-sky-100 hover:text-red-500 p-0.5 my-0.5 rounded-md px-1">
                       <i class="pr-2 fa-solid fa-arrow-left"></i>Logout <UsableTheBtnLoader /></div>
                   </el-dropdown-item>

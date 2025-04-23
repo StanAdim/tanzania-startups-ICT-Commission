@@ -63,10 +63,10 @@ class GeneralController extends Controller
     public function profileCount($type): JsonResponse
     {
         $Items = match ($type) {
-            'startups' => StartupProfile::all()->count(),
-            "hubs" => HubProfile::all()->count(),
-            "accelerators" => AcceleratorProfile::all()->count(),
-            "grassroots" => GrassrootProgramProfile::all()->count(),
+            'startups' => StartupProfile::where('status', true)->get()->count(),
+            "hubs" => HubProfile::where('status', true)->get()->count(),
+            "accelerators" => AcceleratorProfile::where('status', true)->get()->count(),
+            "grassroots" => GrassrootProgramProfile::where('status', true)->get()->count(),
             default => 0,
         };
         return response()->json([

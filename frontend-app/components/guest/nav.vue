@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import {use} from "h3";
 
 // State to toggle mobile menu
 const isMobileMenuOpen = ref(false);
+const authStore = useAuthStore()
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
@@ -41,19 +43,24 @@ const toggleMobileMenu = () => {
 
         <div class="logo">
           <nuxt-link to="/">
-            <img data-aos-delay="400" data-aos="zoom-in" src="/images/ictc-logo-white-opt.png" alt="logo dark" />
+            <img src="/images/ictc-logo-white-opt.png" alt="logo dark" />
           </nuxt-link>
 
         </div>
 
         <!-- Accounts -->
         <div class="flex flex-row flex-wrap gap-2 mx-2">
-          <div class="login" data-aos-delay="400" data-aos="slide-left">
+          <div v-if="authStore.isLoggedIn" class="login">
+            <nuxt-link to="/profile/dashboard">
+              <button class="btn border-sky-500">Dashboard</button>
+            </nuxt-link>
+          </div>
+          <div v-if="!authStore.isLoggedIn" class="login">
             <nuxt-link to="/login">
               <button class="btn border-black">Login</button>
             </nuxt-link>
           </div>
-          <div class="register" data-aos-delay="400" data-aos="slide-left">
+          <div v-if="!authStore.isLoggedIn" class="register">
             <nuxt-link to="/register">
               <button class="btn appBg text-white border-sky-500">
                 Register
