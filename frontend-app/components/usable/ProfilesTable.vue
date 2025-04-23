@@ -11,7 +11,7 @@ const props = defineProps({
 })
 
 const currentPage = ref <number>(1)
-const per_page = ref <number>(10)
+const per_page = ref <number>(50)
 const searchQuery = ref('')
 const pageSwitchValue = ref(1)
 const movePage = async (type:number) => {
