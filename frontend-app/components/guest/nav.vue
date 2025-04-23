@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import {use} from "h3";
 
 // State to toggle mobile menu
 const isMobileMenuOpen = ref(false);
+const authStore = useAuthStore()
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
@@ -48,12 +50,17 @@ const toggleMobileMenu = () => {
 
         <!-- Accounts -->
         <div class="flex flex-row flex-wrap gap-2 mx-2">
-          <div class="login">
+          <div v-if="authStore.isLoggedIn" class="login">
+            <nuxt-link to="/profile/dashboard">
+              <button class="btn border-sky-500">Dashboard</button>
+            </nuxt-link>
+          </div>
+          <div v-if="!authStore.isLoggedIn" class="login">
             <nuxt-link to="/login">
               <button class="btn border-black">Login</button>
             </nuxt-link>
           </div>
-          <div class="register">
+          <div v-if="!authStore.isLoggedIn" class="register">
             <nuxt-link to="/register">
               <button class="btn appBg text-white border-sky-500">
                 Register

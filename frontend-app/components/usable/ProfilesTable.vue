@@ -27,7 +27,7 @@ const genStore = useGeneralStore()
 const  isEditing = ref(false)
 const toggleEditing =  () => isEditing.value = !isEditing.value
 const  updateData = async () => {
-  // await progStore.retrieveAllProgrammes(per_page.value,currentPage.value)
+  await genStore.retrieveApprovedProfiles('startups', searchQuery.value , per_page.value)
 }
 const  searchUserData = async () => {
   await genStore.retrieveApprovedProfiles('startups', searchQuery.value , per_page.value)
