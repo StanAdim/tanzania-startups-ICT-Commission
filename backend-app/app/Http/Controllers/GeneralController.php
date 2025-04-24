@@ -92,7 +92,7 @@ class GeneralController extends Controller
 
         // Retrieve query parameters
         $search = $request->input('search');
-        $perPage = $request->input('per_page', 10);
+        $perPage = $request->input('per_page', 60);
 
         // Build query
         $query = $modelClass::query()->where('status', true)->orderBy('id', 'desc');
