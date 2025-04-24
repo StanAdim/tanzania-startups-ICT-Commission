@@ -1,5 +1,9 @@
 <script setup lang="ts">
 const props = defineProps({
+  type: {
+    type: String,
+    default: 'startups',
+  },
   headers: {
     default: [],
     type: Array
@@ -27,10 +31,10 @@ const genStore = useGeneralStore()
 const  isEditing = ref(false)
 const toggleEditing =  () => isEditing.value = !isEditing.value
 const  updateData = async () => {
-  await genStore.retrieveApprovedProfiles('startups', searchQuery.value , per_page.value)
+  await genStore.retrieveApprovedProfiles(props.type, searchQuery.value , per_page.value)
 }
 const  searchUserData = async () => {
-  await genStore.retrieveApprovedProfiles('startups', searchQuery.value , per_page.value)
+  await genStore.retrieveApprovedProfiles(props.type, searchQuery.value , per_page.value)
 }
 </script>
 
@@ -93,6 +97,7 @@ const  searchUserData = async () => {
                   Previous <UsableTheBtnLoader />
                 </button>
               </li>
+
               <li>
                 <div class="flex justify-center flex-row gap-2">
                   <div class="">Per page</div>

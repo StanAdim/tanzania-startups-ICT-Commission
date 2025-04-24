@@ -76,7 +76,7 @@ export const useGeneralStore = defineStore('generalStore', () => {
             globalStore.handleApiError(error.value)
         }
     }
-    async function retrieveApprovedProfiles(type:string, search:string = '', per_page:number = 10) : Promise<[]>{
+    async function retrieveApprovedProfiles(type:string, search:string = '', per_page:number = 60) : Promise<[]>{
         const {data,error} = await useApiFetch(`/api/approved-profiles/${type}?per_page=${per_page}&search=${search}`);
         if(data.value){
             approvedProfiles.value = data.value;
