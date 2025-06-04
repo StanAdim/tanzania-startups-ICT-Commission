@@ -16,6 +16,7 @@ export const useGeneralStore = defineStore('generalStore', () => {
         grassroots: 0,
     })
 
+    const ProfilesCountAdmin = ref([])
     const sectors = ref([])
     const approvedProfiles = ref([])
     const fundingStages = ref([])
@@ -34,6 +35,7 @@ export const useGeneralStore = defineStore('generalStore', () => {
     const getBlobDataFile : ComputedRef<[]> = computed(() => {return blobDataFile.value})
     const getBlobDataFileName : ComputedRef<[]> = computed(() => {return blobDataName.value})
     const getApprovedProfiles : ComputedRef<[]> = computed(() => {return approvedProfiles.value})
+    const getProfilesCountAdmin : ComputedRef<[]> = computed(() => {return ProfilesCountAdmin.value})
 
     // Actions
     const resetBlobData = () => {
@@ -84,8 +86,15 @@ export const useGeneralStore = defineStore('generalStore', () => {
             globalStore.handleApiError(error.value)
         }
     }
+    async function retrieveProfilesCounts() : Promise<[]>{
+        const {data,error} = await useApiFetch(`/api/admin/profiles-count`);
+        if(data.value){
+            ProfilesCountAdmin.value = data.value;
+        }if(error) {
+            globalStore.handleApiError(error.value)
+        }
+    }
     //handle file preview
-
     const previewFile = async (file_data) : Promise => {
         documentStore.togglePreviewModalStatus(true)
         globalStore.toggleContentLoaderState(true);
@@ -102,6 +111,8 @@ export const useGeneralStore = defineStore('generalStore', () => {
             globalStore.handleApiError(error.value)
         }
     };
+
+    // Return Data
     return {
         getStartupsCount,
         getHubsCount,getAcceleratorsCount,getGrassrootsCount, retrieveProfileCount,
@@ -109,6 +120,7 @@ export const useGeneralStore = defineStore('generalStore', () => {
         getFundingStage,retrieveFundingStages,
         retrieveRegions, getRegions,
         getBlobDataFileName,getBlobDataFile,previewFile, resetBlobData,
-        retrieveApprovedProfiles,getApprovedProfiles
+        retrieveApprovedProfiles,getApprovedProfiles,
+        retrieveProfilesCounts,getProfilesCountAdmin,
     }
 })

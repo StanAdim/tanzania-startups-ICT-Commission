@@ -74,6 +74,33 @@ class GeneralController extends Controller
             'count' => $Items
         ], 200);
     }
+    public function profilesCounts()
+    {
+        $data = [
+
+        ];
+        return response()->json([
+            'message' => 'Success!',
+            'approved_startups' => StartupProfile::where('status', true)->get()->count(),
+            'startups' => StartupProfile::all()->count(),
+            "approved_hubs" => HubProfile::where('status', true)->get()->count(),
+            "hubs" => HubProfile::all()->count(),
+            "approved_accelerators" => AcceleratorProfile::where('status', true)->get()->count(),
+            "accelerators" => AcceleratorProfile::all()->count(),
+
+            "approved_grassroots" => GrassrootProgramProfile::where('status', true)->get()->count(),
+            "grassroots" => GrassrootProgramProfile::all()->count(),
+
+            "approved_projects" => Project::where('status', true)->get()->count(),
+            "projects" => Project::all()->count(),
+
+
+            "approved_products" => IctProduct::where('status', true)->get()->count(),
+            "products" => IctProduct::all()->count(),
+            ]);
+
+
+    }
 
     public function approvedProfiles($type, Request $request)
     {

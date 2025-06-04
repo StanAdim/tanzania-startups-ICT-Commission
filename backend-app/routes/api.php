@@ -109,6 +109,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin'] ], function ()
     Route::get('/export-{type}-report', [FileExportController::class, 'exportProfile']);
     Route::get('/file-preview', [FileExportController::class, 'downloadFile']);
 
+    Route::get('/profiles-count', [GeneralController::class, 'profilesCounts']);
+
+
 });
 
 Route::group(['middleware' => ['permission:edit post']], function () {

@@ -8,16 +8,22 @@ use App\Http\Resources\HubResource;
 use App\Http\Resources\ICTProductResource;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\StartupResource;
+use App\Mail\ApprovalNotificationMail;
+use App\Mail\NotificationEmail;
 use App\Models\Categories\AcceleratorProfile;
 use App\Models\Categories\GrassrootProgramProfile;
 use App\Models\Categories\HubProfile;
 use App\Models\Categories\StartupProfile;
 use App\Models\IctProduct;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class AdminProfileController extends Controller
 {
+
 
     // Global types
     protected $typeModels = [
@@ -168,29 +174,35 @@ class AdminProfileController extends Controller
             ], 404);
         }
         // Update status
-        $modelClass::where('id', $profile->id)->update(['status' => !$profile->status]);
+       $modelClass::where('id', $profile->id)->update(['status' => !$profile->status]);
+        $profile_data = $modelClass::where('id', $profile->id)->first();
+        $this->sendEmailNotification($profile_data->profile->user);
         return response()->json([
             'message' => 'Status updated successfully',
         ], 200);
     }
-     /**
-     * Get available profile types
-     * 
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function getProfileTypes(){
         return response()->json([
             'message' => 'Available profile types',
             'types' => array_keys($this->typeModels)
         ]);
     }
-    /**
-     * Add a new profile type dynamically (if needed)
-     * 
-     * @param string $type
-     * @param array $config
-     */
+
     public function addProfileType($type, array $config){
         $this->typeModels[$type] = $config;
+    }
+    public function testSendMail(){
+        $user = Auth()->user();
+        $this -> sendEmailNotification($user);
+    }
+    private function sendEmailNotification($user): void{
+        Log::info('--- Sending To --- ', ['Email' => $user->email]);
+        try{
+            Log::info('--- Sending Email --- ');
+            Mail::to($user->email)->send(new ApprovalNotificationMail($user));
+        }catch (\Exception $exception) {
+            Log::info('Sending Mail Issue',['issue' => $exception->getMessage()] );
+        }
     }
 }

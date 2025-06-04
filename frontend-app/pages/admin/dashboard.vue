@@ -9,29 +9,17 @@ definePageMeta({
 const globalData = useGlobalDataStore()
 const genStore = useGeneralStore()
 
-const projectsCount = ref('...')
-const productsCount = ref('...')
-
 const dataItems = computed(() => [
-  { title: 'ICT Startups', path: '/admin/profiles/startups', size: genStore.getStartupsCount },
-  { title: 'ICT Innovation Hubs', path: '/admin/profiles/hubs', size: genStore.getHubsCount },
-  { title: 'Digital Accelerators', path: '/admin/profiles/accelerators', size: genStore.getAcceleratorsCount },
-  { title: 'Grassroot Programs', path: '/admin/profiles/grassroots', size: genStore.getGrassrootsCount },
-  { title: 'All Products', path: '/admin/products', size: productsCount.value },
-  { title: 'All Projects', path: '/admin/projects', size: projectsCount.value },
+  { title: 'ICT Startups', path: '/admin/profiles/startups', size: genStore.getProfilesCountAdmin?.approved_startups,  minTitle: 'All ' , total: genStore.getProfilesCountAdmin?.startups },
+  { title: 'ICT Innovation Hubs', path: '/admin/profiles/hubs', size: genStore.getProfilesCountAdmin?.approved_hubs,  minTitle: 'All ' , total: genStore.getProfilesCountAdmin?.hubs },
+  { title: 'Digital Accelerators', path: '/admin/profiles/accelerators', size: genStore.getProfilesCountAdmin?.approved_accelerators,  minTitle: 'All ' , total: genStore.getProfilesCountAdmin?.accelerators },
+  { title: 'Grassroot Programs', path: '/admin/profiles/grassroots', size: genStore.getProfilesCountAdmin?.approved_grassroots,  minTitle: 'All ' , total: genStore.getProfilesCountAdmin?.grassroots },
+  { title: 'All Products', path: '/admin/products', size: genStore.getProfilesCountAdmin?.approved_products,  minTitle: 'All ' , total: genStore.getProfilesCountAdmin?.products },
+  { title: 'All Projects', path: '/admin/projects', size: genStore.getProfilesCountAdmin?.approved_projects,  minTitle: 'All ' , total: genStore.getProfilesCountAdmin?.projects },
 ])
 const init = async () => {
   globalData.assignPageTitle('Admin Dashboard')
-  const [projects, products] = await Promise.all([
-    globalData.statsOfItem('projects'),
-    globalData.statsOfItem('products'),
-    genStore.retrieveProfileCount('startups'),
-    genStore.retrieveProfileCount('hubs'),
-    genStore.retrieveProfileCount('accelerators'),
-    genStore.retrieveProfileCount('grassroots')
-  ])
-  projectsCount.value = projects
-  productsCount.value = products
+  await genStore.retrieveProfilesCounts()
 }
 onNuxtReady(()=> {
   init()
@@ -47,6 +35,8 @@ onNuxtReady(()=> {
           :title="item.title"
           :path="item.path"
           :size="item.size"
+          :total="item.total"
+          :minTitle="item.minTitle"
       />
     </div>
 
