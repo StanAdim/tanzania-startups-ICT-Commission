@@ -17,9 +17,12 @@ class NotificationEmail extends Mailable
     /**
      * Create a new message instance.
      */
+
+    public $user;
     public function __construct(User $user)
     {
         //
+        $this->user = $user;
     }
 
     /**
@@ -38,7 +41,8 @@ class NotificationEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.RegistrationNotify',
+            view: 'emails.registration_mail',
+            with: ['user' => $this->user],
         );
     }
 

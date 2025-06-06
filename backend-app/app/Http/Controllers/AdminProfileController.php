@@ -192,12 +192,8 @@ class AdminProfileController extends Controller
     public function addProfileType($type, array $config){
         $this->typeModels[$type] = $config;
     }
-    public function testSendMail(){
-        $user = Auth()->user();
-        $this -> sendEmailNotification($user);
-    }
+
     private function sendEmailNotification($user): void{
-        Log::info('--- Sending To --- ', ['Email' => $user->email]);
         try{
             Log::info('--- Sending Email --- ');
             Mail::to($user->email)->send(new ApprovalNotificationMail($user));
