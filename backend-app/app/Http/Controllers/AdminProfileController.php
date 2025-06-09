@@ -174,9 +174,11 @@ class AdminProfileController extends Controller
             ], 404);
         }
         // Update status
-       $modelClass::where('id', $profile->id)->update(['status' => !$profile->status]);
+        $modelClass::where('id', $profile->id)->update(['status' => !$profile->status]);
         $profile_data = $modelClass::where('id', $profile->id)->first();
-        $this->sendEmailNotification($profile_data->profile->user);
+        if ($profile_data->status){
+            $this->sendEmailNotification($profile_data->profile->user);
+        }
         return response()->json([
             'message' => 'Status updated successfully',
         ], 200);
