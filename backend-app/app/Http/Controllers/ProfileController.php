@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ApprovalNotificationMail;
+use App\Mail\NewUserRegistrationMail;
 use App\Models\Categories\AcceleratorProfile;
 use App\Models\Categories\GrassrootProgramProfile;
 use App\Models\Categories\HubProfile;
@@ -11,6 +13,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ProfileController extends Controller{
     /**
@@ -78,6 +81,7 @@ class ProfileController extends Controller{
             'email' => $validated['user_email'],
             'password' => bcrypt($validated['password']),
         ]);
+        $this->sendEmailNotification($user);
         // $user->assignRole(['user', '']);
         // Create the specific profile type
         switch ($validated['profile_type']){
@@ -261,5 +265,13 @@ class ProfileController extends Controller{
             'message' => 'Profile created successfully.',
             'profile' => $profile->load('profileable'),
         ], 201);
+    }
+    private function sendEmailNotification($user): void{
+        try{
+            Log::info('--- Sending  --- ');
+            Mail::to($user->email)->send(new NewUserRegistrationMail($user));
+        }catch (\Exception $exception) {
+            Log::info('Sending Mail Issue',['issue' => $exception->getMessage()] );
+        }
     }
 }
