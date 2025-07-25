@@ -10,7 +10,7 @@
         <GuestNav />
       </div>
       <!--      Content-->
-      <div class="container mx-auto">
+      <div class="mx-auto px-4">
         <slot />
       </div>
       <!--      Footer-->

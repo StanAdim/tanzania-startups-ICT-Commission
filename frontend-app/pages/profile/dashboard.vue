@@ -38,8 +38,13 @@ onNuxtReady(()=>{
 </script>
 
 <template>
-  <div>
-    <div class="flex flex-col lg:flex-row gap-4 my-2 py-2">
+  <div class="bg-gradient-to-b from-sky-50 to-white min-h-screen py-10">
+    <!-- Hero/Intro Section -->
+    <div class="text-center mb-10">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-sky-900 mb-2">Welcome to Your Dashboard</h1>
+      <p class="text-lg text-sky-700">Manage your ICT projects, products, and profile in one place.</p>
+    </div>
+    <div class="flex flex-col lg:flex-row gap-6 my-2 py-2">
       <AuthWildCard
           v-for="item in dataItems"
           :key="item.path"
@@ -48,16 +53,23 @@ onNuxtReady(()=>{
           :size="item.size"
       />
     </div>
-    <div class="flex flex-col lg:flex-row gap-4 my-2 py-2">
+    <div class="flex flex-col lg:flex-row gap-6 my-2 py-2">
       <AuthDashCard
           v-for="item in dashCardItems"
-          :key="item.path"
+          :key="item.title"
           :title="item.title"
           :description="item.description"
       />
     </div>
-
+    <!-- Testimonial/Quote -->
+    <div class="mt-10 flex justify-center">
+      <blockquote class="border-l-4 border-green-600 pl-4 italic text-gray-600 bg-green-50 p-4 rounded-lg shadow max-w-xl">
+        “Your journey as a digital innovator starts here. Make the most of the resources and connections available!”<br/>
+        <span class="font-semibold text-green-700">— ICT Commission</span>
+      </blockquote>
+    </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>
