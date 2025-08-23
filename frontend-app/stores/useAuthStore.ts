@@ -1,19 +1,44 @@
-import type {Credential, LoggedUser, Product, User} from "~/types/interfaces";
+import type {Credential, LoggedUser, User, UserRole, RegistrationInfo} from "~/types/interfaces";
 import {defineStore} from "pinia";
 import {useApiFetch} from "~/composables/useApiFetch";
 import type {ComputedRef} from "vue";
+
 export const useAuthStore = defineStore('auth', ()=> {
-    const  user = ref<User | null>(null)
+    const user = ref<LoggedUser | null>(null)
     const isLoggedIn = computed(()=> !!user.value)
     const globalStore = useGlobalDataStore()
     const regStore = useRegistrationStore()
 
-    const getLoggedUser = computed(()=>{return user.value?.user})
-    const getLoggedUserProfile = computed(()=>{return user.value?.profile})
-    const getUserProfileable = computed(()=>{return user.value?.profile?.profileable})
-    const getUserRoles = computed(()=>{return user.value?.user?.roles})
-    const getUserPermissions = computed(()=>{ return  user.value?.user?.permissions})
+    const getLoggedUser = computed(()=> user.value?.user)
+    const getLoggedUserProfile = computed(()=> user.value?.profile)
+    const getUserProfileable = computed(()=> user.value?.profile?.profileable)
+    const getUserRoles = computed(()=> user.value?.user?.role)
+    const getUserPermissions = computed(()=> user.value?.permissions)
     const getProfileCategoryName : ComputedRef<string> = computed(()=> getLoggedUserProfile.value?.profileable?.type)
+
+    // Check if user has specific role
+    const hasRole = (role: UserRole): boolean => {
+        return getUserRoles.value === role
+    }
+
+    // Check if user has any of the specified roles
+    const hasAnyRole = (roles: UserRole[]): boolean => {
+        return roles.includes(getUserRoles.value as UserRole)
+    }
+
+    // Check if user has specific permission
+    const hasPermission = (permission: string): boolean => {
+        return getUserPermissions.value?.includes(permission) || false
+    }
+
+    // Check if user can access admin features
+    const isAdmin = computed(() => hasRole(UserRole.ADMIN))
+    
+    // Check if user is commission staff
+    const isCommissionStaff = computed(() => hasRole(UserRole.COMMISSION_STAFF))
+    
+    // Check if user is startup user
+    const isStartupUser = computed(() => hasRole(UserRole.STARTUP_USER))
 
     //Register
     async function register(passed_data : RegistrationInfo) : Promise <void> {
@@ -34,47 +59,54 @@ export const useAuthStore = defineStore('auth', ()=> {
         }else {
             globalStore.toggleBtnLoadingState(false)
             globalStore.assignAlertMessage(response?.error.value?.data?.message,'error')
-            // console.log(response)
         }
     }
+
     //Fetch User
-    async function fetchUser() : Promise {
+    async function fetchUser() : Promise<any> {
         const {data,error} = await useApiFetch('/api/v1/user');
         if(data.value){
             user.value = data.value as LoggedUser
             if(getLoggedUser.value?.hasInfo == 0)
-                globalStore.toggleUserInfoDialogStatus('on') //close Extra infoDialog
+                globalStore.toggleUserInfoDialogStatus('on')
         }
         if (error.value){
             console.log(error.value.message, 'error')
         }
         return {data,error}
     }
+
     // Login
-    async function login(credentials: Credential) : Promise {
+    async function login(credentials: Credential) : Promise<any> {
         globalStore.toggleBtnLoadingState(true)
         await useApiFetch("/sanctum/csrf-cookie");
         const loginResponse = await useApiFetch('/login',{
             method: 'POST',
             body : credentials
         });
-        console.log(loginResponse)
+        
         if (loginResponse.status.value === 'success'){
             await fetchUser();
             globalStore.toggleBtnLoadingState(false)
             globalStore.assignAlertMessage('Welcome back!!','success')
-        if (user.value){
-            //navigate base on rank
-            getLoggedUser.value.rank === 'internal' ?
-                navigateTo('/admin/dashboard') :
-                navigateTo('/profile/dashboard');
-        }
+            
+            if (user.value){
+                // Navigate based on role
+                if (isAdmin.value) {
+                    navigateTo('/backoffice/dashboard')
+                } else if (isCommissionStaff.value) {
+                    navigateTo('/backoffice/dashboard')
+                } else {
+                    navigateTo('/dashboard')
+                }
+            }
         }else {
             globalStore.toggleBtnLoadingState(false)
             globalStore.assignAlertMessage(loginResponse.error.value?.data?.message, 'error')
         }
         return loginResponse;
     }
+
     //Logout
     async function logout() : Promise <void>{
         globalStore.toggleBtnLoadingState(true)
@@ -89,7 +121,7 @@ export const useAuthStore = defineStore('auth', ()=> {
     }
 
     // resend Verification
-    async function resendEmailVerification() : Promise{
+    async function resendEmailVerification() : Promise<any>{
         await useApiFetch("/sanctum/csrf-cookie");
         const {data,error} = await useApiFetch('/api/send-verification-email');
         if(data.value){
@@ -98,12 +130,12 @@ export const useAuthStore = defineStore('auth', ()=> {
         }
         else {
             globalStore.assignAlertMessage(error.value.message, 'error');
-
         }
         return {data,error}
     }
+
     // resend Verification
-    async function userEmailVerification(verificationKey:string) : Promise{
+    async function userEmailVerification(verificationKey:string) : Promise<any>{
         globalStore.toggleContentLoaderState('on')
 
         await useApiFetch("/sanctum/csrf-cookie");
@@ -114,11 +146,11 @@ export const useAuthStore = defineStore('auth', ()=> {
         }
         else {
             globalStore.assignAlertMessage([[verifyResponse.error.value?.data?.message]], 'error');
-
         }
         globalStore.toggleContentLoaderState('off')
     }
-    async function sendPasswordResetLink(userEmail : string) : Promise {
+
+    async function sendPasswordResetLink(userEmail : string) : Promise<any> {
         await useApiFetch("/sanctum/csrf-cookie");
         const {data, error} = await useApiFetch("/api/send-password-reset-link", {
             method: "POST",
@@ -134,7 +166,8 @@ export const useAuthStore = defineStore('auth', ()=> {
         }
         return {data,error}
     }
-    async function resetUserPassword(newUserPass : string): Promise {
+
+    async function resetUserPassword(newUserPass : string): Promise<any> {
         await useApiFetch("/sanctum/csrf-cookie");
         const {data, error} = await useApiFetch("/api/reset-password", {
             method: "POST",
@@ -151,8 +184,9 @@ export const useAuthStore = defineStore('auth', ()=> {
         }
         return {data,error}
     }
+
     // update user data
-    async  function updateUserData (userKey: string , passedData : object): Promise {
+    async  function updateUserData (userKey: string , passedData : object): Promise<any> {
         const  {data , error} = await  useApiFetch(`/api/admin-update-user-data/${userKey}`, {
             method:'post',
             body: passedData
@@ -164,8 +198,9 @@ export const useAuthStore = defineStore('auth', ()=> {
             globalStore.assignAlertMessage(error.value.data?.message, 'warning')
         }
     }
+
     // update user Email
-    async  function updateUseRole (userKey: string , roleId : string): Promise {
+    async  function updateUseRole (userKey: string , roleId : string): Promise<any> {
         const  {data , error} = await  useApiFetch(`/api/admin-update-user-role/${userKey}-${roleId}`)
         if (data.value){
             globalStore.assignAlertMessage(data.value.message, 'success')
@@ -178,7 +213,7 @@ export const useAuthStore = defineStore('auth', ()=> {
     async function updateUserAccount(passed_data: User) : Promise <void>{
         globalStore.toggleBtnLoadingState(true)
         const {data, error} = await useApiFetch(`/update-user`,{
-            method: 'PATCH',
+            method: "PATCH",
             body : passed_data
         });
         if(data.value){
@@ -190,10 +225,11 @@ export const useAuthStore = defineStore('auth', ()=> {
             globalStore.handleApiError(error.value);
         }
     }
+
     async function changeUserPassword(passed_data: User) : Promise <void>{
         globalStore.toggleBtnLoadingState(true)
         const {data, error} = await useApiFetch(`/change-user-password`,{
-            method: 'PATCH',
+            method: "PATCH",
             body : passed_data
         });
         if(data.value){
@@ -204,12 +240,11 @@ export const useAuthStore = defineStore('auth', ()=> {
             globalStore.handleApiError(error.value);
         }
     }
+
     return {
-        user,login,isLoggedIn,
-        logout,fetchUser,register,getLoggedUser,getUserRoles
-        ,getUserPermissions,getLoggedUserProfile,
-        getUserProfileable,
-        getProfileCategoryName,
-        updateUserAccount,changeUserPassword,
+        user, login, isLoggedIn, logout, fetchUser, register, getLoggedUser, getUserRoles,
+        getUserPermissions, getLoggedUserProfile, getUserProfileable, getProfileCategoryName,
+        updateUserAccount, changeUserPassword, hasRole, hasAnyRole, hasPermission,
+        isAdmin, isCommissionStaff, isStartupUser
     }
 })
