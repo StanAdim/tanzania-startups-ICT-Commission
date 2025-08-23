@@ -12,7 +12,7 @@ const globalData = useGlobalDataStore()
 </script>
 <template>
   <main class="bg-white min-h-screen">
-    <div class="container mx-auto px-2 md:px-6 lg:px-8">
+    <div class="md:container w-full mx-auto px-2 md:px-6 lg:px-8">
       <!-- Hero Section -->
       <section class="md:h-[60vh]" aria-label="Hero">
         <LandingTheHero />

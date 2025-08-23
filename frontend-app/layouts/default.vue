@@ -15,7 +15,7 @@ const date = new Date();
 
 <template>
   <div>
-    <div class="min-h-screen h-screen flex flex-col">
+    <div class="min-h-screen flex flex-col">
       <header class="bg-gray-50 border-b border-sky-300 p-2 flex items-center justify-between">
         <!-- Left section with menu toggle and title -->
         <div class="flex items-center">
@@ -67,7 +67,7 @@ const date = new Date();
             class="flex-1 bg-sky-50 border-l border-r border-sky-300 text-xs p-2 overflow-y-auto"
             :class="{ 'ml-0': !isSidebarOpen }"
         >
-          <div class="leading-10">
+          <div class="leading-10 max-w-4xl mx-auto w-full px-2 md:px-6 lg:px-8">
             <!-- Your Lorem Ipsum content -->
             <div class="bg-white rounded-lg shadow p-6">
               <div class="flex flex-row gap-4">

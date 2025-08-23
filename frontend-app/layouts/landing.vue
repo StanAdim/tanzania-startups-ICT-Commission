@@ -10,7 +10,7 @@
         <GuestNav />
       </div>
 <!--      Content-->
-      <div class="">
+      <div class="w-full">
         <slot />
       </div>
 <!--      Footer-->

@@ -58,9 +58,37 @@ const isAccountStepValid = computed(() => {
 const isStartupStepValid = computed(() => {
   return startup.startup_name && startup.email && startup.phone_number && startup.region_location && startup.industry && startup.funding_stage && startup.team_size && startup.hasFemaleFounder && startup.date_establishment && startup.description && founderList.value.every(f => f.founderName && f.founderPhone)
 })
-const submitRegistration = () => {
-  // Simulate registration success
-  registrationComplete.value = true
+
+import { useFetch } from '#app' // or useApiFetch if you have a custom composable
+
+const loading = ref(false)
+const errorMsg = ref('')
+
+const submitRegistration = async () => {
+  loading.value = true
+  errorMsg.value = ''
+  try {
+    const payload = {
+      ...account,
+      ...startup,
+      founders: founderList.value,
+    }
+    // Replace with your actual API call logic
+    const { data, error } = await useFetch('/api/register-startup', {
+      method: 'POST',
+      body: payload,
+    })
+    if (error.value) {
+      errorMsg.value = error.value.data?.message || 'Registration failed. Please try again.'
+      loading.value = false
+      return
+    }
+    registrationComplete.value = true
+    loading.value = false
+  } catch (e) {
+    errorMsg.value = 'Registration failed. Please try again.'
+    loading.value = false
+  }
 }
 const init = async () => {
   await Promise.all([
@@ -192,8 +220,17 @@ onNuxtReady(()=> {
               </div>
               <div class="flex justify-between mt-4">
                 <button type="button" class="rounded-full bg-gray-200 text-gray-700 font-bold py-3 px-10 text-lg shadow hover:bg-gray-300 transition" @click="prevStep">Back</button>
-                <button type="button" class="rounded-full bg-green-600 text-white font-bold py-3 px-10 text-lg shadow hover:bg-green-700 transition" @click="submitRegistration">Submit Registration</button>
+                <button
+                  type="button"
+                  class="rounded-full bg-green-600 text-white font-bold py-3 px-10 text-lg shadow hover:bg-green-700 transition"
+                  @click="submitRegistration"
+                  :disabled="loading"
+                >
+                  <span v-if="loading"><i class="fa fa-spinner fa-spin"></i> Submitting...</span>
+                  <span v-else>Submit Registration</span>
+                </button>
               </div>
+              <div v-if="errorMsg" class="text-red-600 mt-2">{{ errorMsg }}</div>
             </div>
           </div>
           <!-- Confirmation/Next Steps Page -->
